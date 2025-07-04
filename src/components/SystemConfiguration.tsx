@@ -2,9 +2,10 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Checkbox } from '@/components/ui/checkbox';
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
-import { Computer, Database, Server, Settings } from 'lucide-react';
+import { Computer, Database, Server, Settings, ChevronDown } from 'lucide-react';
 
 interface SystemConfig {
   operatingSystem: string;
@@ -73,35 +74,35 @@ const SystemConfiguration = () => {
   };
 
   return (
-    <Card className="bg-white/80 backdrop-blur-sm shadow-xl border-0 rounded-2xl overflow-hidden">
-      <CardHeader className="bg-slate-800 text-white px-8 py-6">
-        <CardTitle className="text-xl font-medium flex items-center gap-3">
-          <Settings className="w-6 h-6" />
+    <Card className="h-fit shadow-lg border border-gray-200/50">
+      <CardHeader className="bg-gradient-to-r from-slate-900 to-slate-800 text-white">
+        <CardTitle className="text-lg font-semibold flex items-center gap-3">
+          <div className="w-8 h-8 bg-white/10 rounded-lg flex items-center justify-center">
+            <Settings className="w-4 h-4" />
+          </div>
           System Configuration
         </CardTitle>
-        <p className="text-slate-300 text-sm font-light mt-2">
-          Optional - helps provide more targeted recommendations
+        <p className="text-slate-300 text-sm mt-1">
+          Optional - helps provide targeted recommendations
         </p>
       </CardHeader>
-      <CardContent className="p-8 space-y-8">
+      <CardContent className="p-6 space-y-6">
         {/* Operating System */}
-        <div className="space-y-3">
-          <Label className="text-base font-medium text-slate-700 flex items-center gap-3">
-            <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-              <Computer className="w-4 h-4 text-blue-600" />
-            </div>
+        <div className="space-y-2">
+          <Label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+            <Computer className="w-4 h-4 text-blue-600" />
             Operating System
           </Label>
           <Select 
             value={config.operatingSystem} 
             onValueChange={(value) => setConfig(prev => ({ ...prev, operatingSystem: value }))}
           >
-            <SelectTrigger className="h-12 bg-slate-50 border-slate-200 rounded-xl text-slate-700 font-medium">
-              <SelectValue placeholder="Select your operating system" />
+            <SelectTrigger className="w-full h-10 bg-white border-gray-200 hover:border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+              <SelectValue placeholder="Select operating system" />
             </SelectTrigger>
-            <SelectContent className="bg-white border-slate-200 shadow-xl rounded-xl">
+            <SelectContent className="bg-white border border-gray-200 shadow-lg z-50">
               {operatingSystems.map((os) => (
-                <SelectItem key={os} value={os} className="py-3 px-4 hover:bg-slate-50 rounded-lg mx-1">
+                <SelectItem key={os} value={os} className="hover:bg-gray-50">
                   {os}
                 </SelectItem>
               ))}
@@ -110,23 +111,21 @@ const SystemConfiguration = () => {
         </div>
 
         {/* Database */}
-        <div className="space-y-3">
-          <Label className="text-base font-medium text-slate-700 flex items-center gap-3">
-            <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-              <Database className="w-4 h-4 text-green-600" />
-            </div>
+        <div className="space-y-2">
+          <Label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+            <Database className="w-4 h-4 text-green-600" />
             Database
           </Label>
           <Select 
             value={config.database} 
             onValueChange={(value) => setConfig(prev => ({ ...prev, database: value }))}
           >
-            <SelectTrigger className="h-12 bg-slate-50 border-slate-200 rounded-xl text-slate-700 font-medium">
-              <SelectValue placeholder="Select your database" />
+            <SelectTrigger className="w-full h-10 bg-white border-gray-200 hover:border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+              <SelectValue placeholder="Select database" />
             </SelectTrigger>
-            <SelectContent className="bg-white border-slate-200 shadow-xl rounded-xl">
+            <SelectContent className="bg-white border border-gray-200 shadow-lg z-50">
               {databases.map((db) => (
-                <SelectItem key={db} value={db} className="py-3 px-4 hover:bg-slate-50 rounded-lg mx-1">
+                <SelectItem key={db} value={db} className="hover:bg-gray-50">
                   {db}
                 </SelectItem>
               ))}
@@ -135,59 +134,69 @@ const SystemConfiguration = () => {
         </div>
 
         {/* Web Servers */}
-        <div className="space-y-4">
-          <Label className="text-base font-medium text-slate-700 flex items-center gap-3">
-            <div className="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">
-              <Server className="w-4 h-4 text-orange-600" />
-            </div>
+        <div className="space-y-2">
+          <Label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+            <Server className="w-4 h-4 text-orange-600" />
             Web Servers
-            <span className="text-xs text-slate-500 font-normal">(multiple selection)</span>
           </Label>
-          <div className="bg-slate-50 rounded-xl p-4 space-y-3 max-h-64 overflow-y-auto">
-            {webServers.map((webServer) => (
-              <div key={webServer} className="flex items-center space-x-3 p-2 hover:bg-white rounded-lg transition-colors">
-                <Checkbox
-                  id={webServer}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="outline"
+                className="w-full h-10 justify-between bg-white border-gray-200 hover:border-gray-300 hover:bg-gray-50"
+              >
+                <span className="text-gray-700">
+                  {config.webServers.length === 0 
+                    ? "Select web servers" 
+                    : `${config.webServers.length} selected`
+                  }
+                </span>
+                <ChevronDown className="h-4 w-4 text-gray-500" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-80 bg-white border border-gray-200 shadow-lg z-50" align="start">
+              {webServers.map((webServer) => (
+                <DropdownMenuCheckboxItem
+                  key={webServer}
                   checked={config.webServers.includes(webServer)}
-                  onCheckedChange={(checked) => handleWebServerChange(webServer, checked as boolean)}
-                  className="border-slate-300 data-[state=checked]:bg-slate-800 data-[state=checked]:border-slate-800"
-                />
-                <Label 
-                  htmlFor={webServer} 
-                  className="text-sm text-slate-700 cursor-pointer font-medium flex-1"
+                  onCheckedChange={(checked) => handleWebServerChange(webServer, checked)}
+                  className="hover:bg-gray-50 cursor-pointer"
                 >
                   {webServer}
-                </Label>
-              </div>
-            ))}
-          </div>
+                </DropdownMenuCheckboxItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
 
-        {/* Current Selection Summary */}
+        {/* Selection Summary */}
         {(config.operatingSystem || config.database || config.webServers.length > 0) && (
-          <div className="bg-blue-50 rounded-xl p-6 border border-blue-100">
-            <h4 className="text-base font-semibold text-slate-800 mb-3">Current Selection</h4>
-            <div className="space-y-2">
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-6">
+            <h4 className="text-sm font-semibold text-gray-800 mb-3 flex items-center gap-2">
+              <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+              Current Configuration
+            </h4>
+            <div className="space-y-2 text-sm">
               {config.operatingSystem && (
-                <div className="flex items-center gap-2 text-sm text-slate-600">
-                  <Computer className="w-4 h-4" />
+                <div className="flex items-center gap-2 text-gray-600">
+                  <Computer className="w-3 h-3" />
                   <span className="font-medium">OS:</span> {config.operatingSystem}
                 </div>
               )}
               {config.database && (
-                <div className="flex items-center gap-2 text-sm text-slate-600">
-                  <Database className="w-4 h-4" />
-                  <span className="font-medium">Database:</span> {config.database}
+                <div className="flex items-center gap-2 text-gray-600">
+                  <Database className="w-3 h-3" />
+                  <span className="font-medium">DB:</span> {config.database}
                 </div>
               )}
               {config.webServers.length > 0 && (
-                <div className="flex items-start gap-2 text-sm text-slate-600">
-                  <Server className="w-4 h-4 mt-0.5" />
-                  <div>
-                    <span className="font-medium">Web Servers:</span>
+                <div className="flex items-start gap-2 text-gray-600">
+                  <Server className="w-3 h-3 mt-0.5" />
+                  <div className="flex-1">
+                    <span className="font-medium">Servers:</span>
                     <div className="mt-1 flex flex-wrap gap-1">
                       {config.webServers.map((server) => (
-                        <span key={server} className="bg-white px-2 py-1 rounded-md text-xs border border-slate-200">
+                        <span key={server} className="inline-block bg-white px-2 py-0.5 rounded text-xs border border-gray-200">
                           {server}
                         </span>
                       ))}
