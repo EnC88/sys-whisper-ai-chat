@@ -1,9 +1,8 @@
-
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, Bot, User, Database, Server, Computer } from 'lucide-react';
+import { Send, Bot, User, Database, Server, Computer, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
 interface Message {
@@ -139,37 +138,52 @@ const ChatInterface = () => {
   };
 
   return (
-    <Card className="bg-white border-gray-200 shadow-sm">
-      <CardContent className="p-6">
+    <Card className="bg-white/80 backdrop-blur-sm shadow-xl border-0 rounded-2xl overflow-hidden">
+      <CardHeader className="bg-slate-800 text-white px-8 py-6">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center">
+            <Sparkles className="w-5 h-5" />
+          </div>
+          <div>
+            <h2 className="text-xl font-medium">AI Assistant</h2>
+            <p className="text-slate-300 text-sm font-light">Ask me about system compatibility</p>
+          </div>
+        </div>
+      </CardHeader>
+      <CardContent className="p-8">
         {/* Chat Messages */}
-        <div className="h-96 overflow-y-auto mb-4 space-y-4 scrollbar-thin scrollbar-thumb-gray-300">
+        <div className="h-96 overflow-y-auto mb-6 space-y-4 pr-2">
           {messages.map((message) => (
             <div
               key={message.id}
               className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
             >
               <div
-                className={`max-w-xs lg:max-w-md px-4 py-3 rounded-lg ${
+                className={`max-w-xs lg:max-w-md px-6 py-4 rounded-2xl ${
                   message.type === 'user'
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-gray-100 text-gray-900 border border-gray-200'
+                    ? 'bg-slate-800 text-white shadow-lg'
+                    : 'bg-slate-100 text-slate-800 shadow-md'
                 }`}
               >
-                <div className="flex items-center gap-2 mb-1">
-                  {message.type === 'user' ? (
-                    <User className="w-4 h-4" />
-                  ) : (
-                    <Bot className="w-4 h-4" />
-                  )}
+                <div className="flex items-center gap-2 mb-2">
+                  <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
+                    message.type === 'user' ? 'bg-white/20' : 'bg-slate-800/10'
+                  }`}>
+                    {message.type === 'user' ? (
+                      <User className="w-3 h-3" />
+                    ) : (
+                      <Bot className="w-3 h-3" />
+                    )}
+                  </div>
                   {message.category && (
-                    <Badge variant="secondary" className="text-xs bg-gray-200 text-gray-700 border-gray-300">
+                    <Badge variant="secondary" className="text-xs bg-white/20 text-current border-0 font-medium">
                       {getCategoryIcon(message.category)}
                       <span className="ml-1">{getCategoryLabel(message.category)}</span>
                     </Badge>
                   )}
                 </div>
-                <p className="text-sm leading-relaxed">{message.content}</p>
-                <p className="text-xs opacity-70 mt-1">
+                <p className="text-sm leading-relaxed font-medium">{message.content}</p>
+                <p className={`text-xs mt-2 ${message.type === 'user' ? 'text-white/60' : 'text-slate-500'}`}>
                   {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </p>
               </div>
@@ -178,14 +192,16 @@ const ChatInterface = () => {
           
           {isLoading && (
             <div className="flex justify-start">
-              <div className="bg-gray-100 text-gray-900 border border-gray-200 max-w-xs lg:max-w-md px-4 py-3 rounded-lg">
-                <div className="flex items-center gap-2 mb-1">
-                  <Bot className="w-4 h-4" />
+              <div className="bg-slate-100 text-slate-800 shadow-md max-w-xs lg:max-w-md px-6 py-4 rounded-2xl">
+                <div className="flex items-center gap-2 mb-2">
+                  <div className="w-6 h-6 rounded-full flex items-center justify-center bg-slate-800/10">
+                    <Bot className="w-3 h-3" />
+                  </div>
                 </div>
                 <div className="flex space-x-1">
-                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse"></div>
-                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
-                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+                  <div className="w-2 h-2 bg-slate-400 rounded-full animate-pulse"></div>
+                  <div className="w-2 h-2 bg-slate-400 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+                  <div className="w-2 h-2 bg-slate-400 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
                 </div>
               </div>
             </div>
@@ -194,51 +210,51 @@ const ChatInterface = () => {
         </div>
 
         {/* Input Area */}
-        <div className="flex gap-2">
+        <div className="flex gap-3 mb-6">
           <Input
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyPress={handleKeyPress}
             placeholder="Ask about OS, database, or web server compatibility..."
-            className="flex-1 bg-white border-gray-300 placeholder-gray-500 text-gray-900 focus:border-blue-500"
+            className="flex-1 h-12 bg-slate-50 border-slate-200 rounded-xl placeholder-slate-500 text-slate-800 font-medium focus:border-slate-800 focus:ring-slate-800"
             disabled={isLoading}
           />
           <Button
             onClick={handleSendMessage}
             disabled={!inputValue.trim() || isLoading}
-            className="bg-blue-600 hover:bg-blue-700 text-white border-0"
+            className="h-12 px-6 bg-slate-800 hover:bg-slate-700 text-white border-0 rounded-xl shadow-lg transition-all duration-200 hover:shadow-xl"
           >
             <Send className="w-4 h-4" />
           </Button>
         </div>
 
         {/* Quick Action Buttons */}
-        <div className="flex flex-wrap gap-2 mt-4">
+        <div className="flex flex-wrap gap-3">
           <Button
             variant="outline"
             size="sm"
             onClick={() => setInputValue("What operating systems are compatible with Docker?")}
-            className="bg-white border-gray-300 text-gray-700 hover:bg-gray-50 text-xs"
+            className="bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100 rounded-xl font-medium h-10"
           >
-            <Computer className="w-3 h-3 mr-1" />
+            <Computer className="w-4 h-4 mr-2" />
             OS Compatibility
           </Button>
           <Button
             variant="outline"
             size="sm"
             onClick={() => setInputValue("Which databases work best with Node.js applications?")}
-            className="bg-white border-gray-300 text-gray-700 hover:bg-gray-50 text-xs"
+            className="bg-green-50 border-green-200 text-green-700 hover:bg-green-100 rounded-xl font-medium h-10"
           >
-            <Database className="w-3 h-3 mr-1" />
+            <Database className="w-4 h-4 mr-2" />
             Database Options
           </Button>
           <Button
             variant="outline"
             size="sm"
             onClick={() => setInputValue("Apache vs Nginx compatibility comparison")}
-            className="bg-white border-gray-300 text-gray-700 hover:bg-gray-50 text-xs"
+            className="bg-orange-50 border-orange-200 text-orange-700 hover:bg-orange-100 rounded-xl font-medium h-10"
           >
-            <Server className="w-3 h-3 mr-1" />
+            <Server className="w-4 h-4 mr-2" />
             Web Servers
           </Button>
         </div>
