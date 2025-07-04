@@ -18,7 +18,7 @@ const ChatInterface = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      content: "Hello! I'm your AI compatibility assistant. Ask me anything about operating systems, databases, and web servers compatibility!",
+      content: "Hello! I'm your system compatibility assistant. Ask me anything about operating systems, databases, and web servers compatibility!",
       type: 'bot',
       timestamp: new Date(),
     }
@@ -139,20 +139,20 @@ const ChatInterface = () => {
   };
 
   return (
-    <Card className="max-w-4xl mx-auto bg-white/10 backdrop-blur-lg border-white/20">
+    <Card className="bg-white border-gray-200 shadow-sm">
       <CardContent className="p-6">
         {/* Chat Messages */}
-        <div className="h-96 overflow-y-auto mb-4 space-y-4 scrollbar-thin scrollbar-thumb-white/20">
+        <div className="h-96 overflow-y-auto mb-4 space-y-4 scrollbar-thin scrollbar-thumb-gray-300">
           {messages.map((message) => (
             <div
               key={message.id}
               className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
             >
               <div
-                className={`max-w-xs lg:max-w-md px-4 py-3 rounded-2xl ${
+                className={`max-w-xs lg:max-w-md px-4 py-3 rounded-lg ${
                   message.type === 'user'
-                    ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white'
-                    : 'bg-white/20 text-white border border-white/20'
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-gray-100 text-gray-900 border border-gray-200'
                 }`}
               >
                 <div className="flex items-center gap-2 mb-1">
@@ -162,7 +162,7 @@ const ChatInterface = () => {
                     <Bot className="w-4 h-4" />
                   )}
                   {message.category && (
-                    <Badge variant="secondary" className="text-xs bg-white/20 text-white border-white/30">
+                    <Badge variant="secondary" className="text-xs bg-gray-200 text-gray-700 border-gray-300">
                       {getCategoryIcon(message.category)}
                       <span className="ml-1">{getCategoryLabel(message.category)}</span>
                     </Badge>
@@ -178,14 +178,14 @@ const ChatInterface = () => {
           
           {isLoading && (
             <div className="flex justify-start">
-              <div className="bg-white/20 text-white border border-white/20 max-w-xs lg:max-w-md px-4 py-3 rounded-2xl">
+              <div className="bg-gray-100 text-gray-900 border border-gray-200 max-w-xs lg:max-w-md px-4 py-3 rounded-lg">
                 <div className="flex items-center gap-2 mb-1">
                   <Bot className="w-4 h-4" />
                 </div>
                 <div className="flex space-x-1">
-                  <div className="w-2 h-2 bg-white/60 rounded-full animate-pulse"></div>
-                  <div className="w-2 h-2 bg-white/60 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
-                  <div className="w-2 h-2 bg-white/60 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse"></div>
+                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
                 </div>
               </div>
             </div>
@@ -200,13 +200,13 @@ const ChatInterface = () => {
             onChange={(e) => setInputValue(e.target.value)}
             onKeyPress={handleKeyPress}
             placeholder="Ask about OS, database, or web server compatibility..."
-            className="flex-1 bg-white/10 border-white/20 placeholder-white/50 text-white focus:border-white/40"
+            className="flex-1 bg-white border-gray-300 placeholder-gray-500 text-gray-900 focus:border-blue-500"
             disabled={isLoading}
           />
           <Button
             onClick={handleSendMessage}
             disabled={!inputValue.trim() || isLoading}
-            className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border-0"
+            className="bg-blue-600 hover:bg-blue-700 text-white border-0"
           >
             <Send className="w-4 h-4" />
           </Button>
@@ -218,7 +218,7 @@ const ChatInterface = () => {
             variant="outline"
             size="sm"
             onClick={() => setInputValue("What operating systems are compatible with Docker?")}
-            className="bg-white/10 border-white/20 text-white hover:bg-white/20 text-xs"
+            className="bg-white border-gray-300 text-gray-700 hover:bg-gray-50 text-xs"
           >
             <Computer className="w-3 h-3 mr-1" />
             OS Compatibility
@@ -227,7 +227,7 @@ const ChatInterface = () => {
             variant="outline"
             size="sm"
             onClick={() => setInputValue("Which databases work best with Node.js applications?")}
-            className="bg-white/10 border-white/20 text-white hover:bg-white/20 text-xs"
+            className="bg-white border-gray-300 text-gray-700 hover:bg-gray-50 text-xs"
           >
             <Database className="w-3 h-3 mr-1" />
             Database Options
@@ -236,7 +236,7 @@ const ChatInterface = () => {
             variant="outline"
             size="sm"
             onClick={() => setInputValue("Apache vs Nginx compatibility comparison")}
-            className="bg-white/10 border-white/20 text-white hover:bg-white/20 text-xs"
+            className="bg-white border-gray-300 text-gray-700 hover:bg-gray-50 text-xs"
           >
             <Server className="w-3 h-3 mr-1" />
             Web Servers
