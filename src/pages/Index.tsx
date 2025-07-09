@@ -1,6 +1,7 @@
 
 import ChatInterface from "@/components/ChatInterface";
 import SystemConfiguration from "@/components/SystemConfiguration";
+import StatsOverview from "@/components/StatsOverview";
 
 const Index = () => {
   return (
@@ -11,10 +12,16 @@ const Index = () => {
             System Compatibility Assistant
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            Get expert guidance on operating systems, databases, and web server compatibility
+            Enterprise-grade system compatibility analysis and recommendations
           </p>
         </div>
         
+        {/* Statistics Overview */}
+        <div className="mb-8">
+          <StatsOverview />
+        </div>
+
+        {/* Main Interface */}
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 max-w-6xl mx-auto">
           <div className="lg:col-span-2">
             <SystemConfiguration />
