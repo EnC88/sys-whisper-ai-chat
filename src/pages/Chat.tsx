@@ -126,10 +126,10 @@ const Chat = () => {
   };
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex h-screen bg-gray-50 w-full">
       {/* Chat History Sidebar */}
       {showHistory && (
-        <div className="w-80 bg-white border-r border-gray-200 flex flex-col">
+        <div className="w-80 bg-white border-r border-gray-200 flex flex-col flex-shrink-0">
           <div className="p-4 border-b border-gray-100">
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-semibold text-gray-900">Chat History</h3>
@@ -163,9 +163,9 @@ const Chat = () => {
       )}
 
       {/* Main Chat Area */}
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col min-w-0">
         {/* Header */}
-        <div className="bg-white border-b border-gray-200 p-4">
+        <div className="bg-white border-b border-gray-200 p-4 flex-shrink-0">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <h1 className="text-2xl font-bold text-gray-900">System Chat</h1>
@@ -189,9 +189,9 @@ const Chat = () => {
         </div>
 
         {/* Quick Actions */}
-        <div className="bg-white border-b border-gray-100 p-4">
+        <div className="bg-white border-b border-gray-100 p-4 flex-shrink-0">
           <p className="text-sm font-medium text-gray-700 mb-3">Quick Actions</p>
-          <div className="flex gap-3">
+          <div className="flex gap-3 flex-wrap">
             {quickActions.map((action, index) => (
               <Button
                 key={index}
@@ -207,7 +207,7 @@ const Chat = () => {
         </div>
 
         {/* Messages */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-4">
+        <div className="flex-1 overflow-y-auto p-6 space-y-4 min-h-0">
           {messages.map((message) => (
             <div
               key={message.id}
@@ -236,7 +236,7 @@ const Chat = () => {
         </div>
 
         {/* Input */}
-        <div className="bg-white border-t border-gray-200 p-4">
+        <div className="bg-white border-t border-gray-200 p-4 flex-shrink-0">
           <div className="flex gap-3 max-w-4xl mx-auto">
             <Input
               placeholder="Ask about system compatibility..."
