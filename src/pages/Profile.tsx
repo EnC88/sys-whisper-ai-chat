@@ -5,9 +5,10 @@ import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMe
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
+import { Badge } from '@/components/ui/badge';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
-import { Computer, Database, Server, User, ChevronDown, Save, Check } from 'lucide-react';
+import { Computer, Database, Server, User, ChevronDown, Save, Check, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface SystemConfig {
@@ -60,6 +61,13 @@ const Profile = () => {
       webServers: checked 
         ? [...prev.webServers, webServer]
         : prev.webServers.filter(ws => ws !== webServer)
+    }));
+  };
+
+  const removeWebServer = (webServer: string) => {
+    setConfig(prev => ({
+      ...prev,
+      webServers: prev.webServers.filter(ws => ws !== webServer)
     }));
   };
 
@@ -231,6 +239,7 @@ const Profile = () => {
                     />
                   </div>
                 </div>
+                
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button variant="outline" className="w-full justify-between">
@@ -255,6 +264,31 @@ const Profile = () => {
                     ))}
                   </DropdownMenuContent>
                 </DropdownMenu>
+
+                {/* Selected Web Servers Chips */}
+                {config.webServers.length > 0 && (
+                  <div className="mt-3">
+                    <div className="text-xs text-gray-500 mb-2">Selected servers:</div>
+                    <div className="flex flex-wrap gap-2">
+                      {config.webServers.map((server) => (
+                        <Badge
+                          key={server}
+                          variant="secondary"
+                          className="flex items-center gap-1 bg-orange-50 text-orange-700 border border-orange-200 hover:bg-orange-100 transition-colors px-2 py-1"
+                        >
+                          <span className="text-xs">{server}</span>
+                          <button
+                            onClick={() => removeWebServer(server)}
+                            className="ml-1 hover:bg-orange-200 rounded-full p-0.5 transition-colors"
+                            aria-label={`Remove ${server}`}
+                          >
+                            <X className="w-3 h-3" />
+                          </button>
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
 
               <Button onClick={handleSave} className="w-full bg-slate-800 hover:bg-slate-700">
@@ -305,11 +339,11 @@ const Profile = () => {
                     <Server className="w-4 h-4 text-orange-600 mt-0.5" />
                     <div className="flex-1">
                       <div className="font-medium text-orange-900">Web Servers</div>
-                      <div className="mt-1 flex flex-wrap gap-1">
+                      <div className="mt-2 flex flex-wrap gap-1.5">
                         {config.webServers.map((server) => (
-                          <span key={server} className="inline-block bg-white px-2 py-1 rounded text-xs border border-orange-200 text-orange-700">
+                          <Badge key={server} variant="outline" className="text-xs bg-white border-orange-200 text-orange-700">
                             {server}
-                          </span>
+                          </Badge>
                         ))}
                       </div>
                     </div>
