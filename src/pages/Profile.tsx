@@ -1,12 +1,14 @@
 
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
-import { Computer, Database, Server, User, ChevronDown, Save } from 'lucide-react';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
+import { Computer, Database, Server, User, ChevronDown, Save, Check } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface SystemConfig {
   operatingSystem: string;
@@ -30,6 +32,9 @@ const Profile = () => {
       webServers: true
     }
   });
+
+  const [openOS, setOpenOS] = useState(false);
+  const [openDB, setOpenDB] = useState(false);
 
   const operatingSystems = [
     'Windows 10', 'Windows 11', 'Windows Server 2019', 'Windows Server 2022',
@@ -102,19 +107,47 @@ const Profile = () => {
                     />
                   </div>
                 </div>
-                <Select 
-                  value={config.operatingSystem} 
-                  onValueChange={(value) => setConfig(prev => ({ ...prev, operatingSystem: value }))}
-                >
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Select operating system" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {operatingSystems.map((os) => (
-                      <SelectItem key={os} value={os}>{os}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <Popover open={openOS} onOpenChange={setOpenOS}>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      role="combobox"
+                      aria-expanded={openOS}
+                      className="w-full justify-between"
+                    >
+                      {config.operatingSystem ? config.operatingSystem : "Select operating system"}
+                      <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-full p-0">
+                    <Command>
+                      <CommandInput placeholder="Search operating systems..." />
+                      <CommandList>
+                        <CommandEmpty>No operating system found.</CommandEmpty>
+                        <CommandGroup>
+                          {operatingSystems.map((os) => (
+                            <CommandItem
+                              key={os}
+                              value={os}
+                              onSelect={(currentValue) => {
+                                setConfig(prev => ({ ...prev, operatingSystem: currentValue === config.operatingSystem ? "" : currentValue }));
+                                setOpenOS(false);
+                              }}
+                            >
+                              <Check
+                                className={cn(
+                                  "mr-2 h-4 w-4",
+                                  config.operatingSystem === os ? "opacity-100" : "opacity-0"
+                                )}
+                              />
+                              {os}
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      </CommandList>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
               </div>
 
               {/* Database */}
@@ -136,19 +169,47 @@ const Profile = () => {
                     />
                   </div>
                 </div>
-                <Select 
-                  value={config.database} 
-                  onValueChange={(value) => setConfig(prev => ({ ...prev, database: value }))}
-                >
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Select database" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {databases.map((db) => (
-                      <SelectItem key={db} value={db}>{db}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <Popover open={openDB} onOpenChange={setOpenDB}>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      role="combobox"
+                      aria-expanded={openDB}
+                      className="w-full justify-between"
+                    >
+                      {config.database ? config.database : "Select database"}
+                      <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-full p-0">
+                    <Command>
+                      <CommandInput placeholder="Search databases..." />
+                      <CommandList>
+                        <CommandEmpty>No database found.</CommandEmpty>
+                        <CommandGroup>
+                          {databases.map((db) => (
+                            <CommandItem
+                              key={db}
+                              value={db}
+                              onSelect={(currentValue) => {
+                                setConfig(prev => ({ ...prev, database: currentValue === config.database ? "" : currentValue }));
+                                setOpenDB(false);
+                              }}
+                            >
+                              <Check
+                                className={cn(
+                                  "mr-2 h-4 w-4",
+                                  config.database === db ? "opacity-100" : "opacity-0"
+                                )}
+                              />
+                              {db}
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      </CommandList>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
               </div>
 
               {/* Web Servers */}
