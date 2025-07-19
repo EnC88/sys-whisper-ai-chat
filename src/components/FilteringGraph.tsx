@@ -18,95 +18,171 @@ const FilteringGraph: React.FC<FilteringGraphProps> = ({ messageId }) => {
     {
       id: '1',
       type: 'input',
-      data: { label: 'All Systems\n(1,200+ options)' },
-      position: { x: 50, y: 0 },
+      data: { 
+        label: (
+          <div className="text-center">
+            <div className="font-semibold text-sm">All Systems</div>
+            <div className="text-xs opacity-90">1,200+ options</div>
+          </div>
+        )
+      },
+      position: { x: 180, y: 0 },
       style: { 
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-        color: 'white',
+        background: 'hsl(var(--primary))',
+        color: 'hsl(var(--primary-foreground))',
         border: 'none',
-        width: 140,
-        fontSize: '11px',
-        textAlign: 'center'
+        borderRadius: '12px',
+        width: 180,
+        height: 60,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        boxShadow: '0 4px 12px hsl(var(--primary) / 0.25)'
       }
     },
     {
       id: '2',
-      data: { label: 'User Profile Filter\n(Windows, MySQL, Apache)' },
-      position: { x: 0, y: 80 },
+      data: { 
+        label: (
+          <div className="text-center">
+            <div className="font-medium text-sm">User Profile Filter</div>
+            <div className="text-xs opacity-80 mt-1">Windows, MySQL, Apache</div>
+          </div>
+        )
+      },
+      position: { x: 50, y: 120 },
       style: { 
-        background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-        color: 'white',
-        border: 'none',
-        width: 160,
-        fontSize: '11px',
-        textAlign: 'center'
+        background: 'hsl(var(--secondary))',
+        color: 'hsl(var(--secondary-foreground))',
+        border: '1px solid hsl(var(--border))',
+        borderRadius: '10px',
+        width: 170,
+        height: 55,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        boxShadow: '0 2px 8px hsl(var(--muted) / 0.2)'
       }
     },
     {
       id: '3',
-      data: { label: 'Compatibility Check\n(240 compatible)' },
-      position: { x: 200, y: 80 },
+      data: { 
+        label: (
+          <div className="text-center">
+            <div className="font-medium text-sm">Compatibility Check</div>
+            <div className="text-xs opacity-80 mt-1">240 compatible</div>
+          </div>
+        )
+      },
+      position: { x: 270, y: 120 },
       style: { 
-        background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-        color: 'white',
-        border: 'none',
-        width: 160,
-        fontSize: '11px',
-        textAlign: 'center'
+        background: 'hsl(var(--accent))',
+        color: 'hsl(var(--accent-foreground))',
+        border: '1px solid hsl(var(--border))',
+        borderRadius: '10px',
+        width: 170,
+        height: 55,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        boxShadow: '0 2px 8px hsl(var(--muted) / 0.2)'
       }
     },
     {
       id: '4',
-      data: { label: 'Performance Filter\n(85 high-performance)' },
-      position: { x: 0, y: 160 },
+      data: { 
+        label: (
+          <div className="text-center">
+            <div className="font-medium text-sm">Performance Filter</div>
+            <div className="text-xs opacity-80 mt-1">85 high-performance</div>
+          </div>
+        )
+      },
+      position: { x: 50, y: 220 },
       style: { 
-        background: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
-        color: 'white',
-        border: 'none',
-        width: 160,
-        fontSize: '11px',
-        textAlign: 'center'
+        background: 'hsl(var(--muted))',
+        color: 'hsl(var(--muted-foreground))',
+        border: '1px solid hsl(var(--border))',
+        borderRadius: '10px',
+        width: 170,
+        height: 55,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        boxShadow: '0 2px 8px hsl(var(--muted) / 0.15)'
       }
     },
     {
       id: '5',
-      data: { label: 'Security Standards\n(42 compliant)' },
-      position: { x: 200, y: 160 },
+      data: { 
+        label: (
+          <div className="text-center">
+            <div className="font-medium text-sm">Security Standards</div>
+            <div className="text-xs opacity-80 mt-1">42 compliant</div>
+          </div>
+        )
+      },
+      position: { x: 270, y: 220 },
       style: { 
-        background: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
-        color: 'white',
-        border: 'none',
-        width: 160,
-        fontSize: '11px',
-        textAlign: 'center'
+        background: 'hsl(var(--muted))',
+        color: 'hsl(var(--muted-foreground))',
+        border: '1px solid hsl(var(--border))',
+        borderRadius: '10px',
+        width: 170,
+        height: 55,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        boxShadow: '0 2px 8px hsl(var(--muted) / 0.15)'
       }
     },
     {
       id: '6',
-      data: { label: 'User Preferences\n(reliability > performance)' },
-      position: { x: 100, y: 240 },
+      data: { 
+        label: (
+          <div className="text-center">
+            <div className="font-medium text-sm">User Preferences</div>
+            <div className="text-xs opacity-80 mt-1">reliability &gt; performance</div>
+          </div>
+        )
+      },
+      position: { x: 160, y: 320 },
       style: { 
-        background: 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
-        color: '#333',
-        border: 'none',
-        width: 160,
-        fontSize: '11px',
-        textAlign: 'center'
+        background: 'hsl(var(--card))',
+        color: 'hsl(var(--card-foreground))',
+        border: '1px solid hsl(var(--border))',
+        borderRadius: '10px',
+        width: 170,
+        height: 55,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        boxShadow: '0 2px 6px hsl(var(--muted) / 0.1)'
       }
     },
     {
       id: '7',
       type: 'output',
-      data: { label: 'Final Recommendations\n(3 optimal solutions)' },
-      position: { x: 100, y: 320 },
+      data: { 
+        label: (
+          <div className="text-center">
+            <div className="font-semibold text-sm">Final Recommendations</div>
+            <div className="text-xs opacity-90 mt-1">3 optimal solutions</div>
+          </div>
+        )
+      },
+      position: { x: 160, y: 420 },
       style: { 
-        background: 'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)',
-        color: '#333',
-        border: '2px solid #ff8a65',
-        width: 160,
-        fontSize: '11px',
-        fontWeight: 'bold',
-        textAlign: 'center'
+        background: 'hsl(var(--primary))',
+        color: 'hsl(var(--primary-foreground))',
+        border: '2px solid hsl(var(--primary) / 0.8)',
+        borderRadius: '12px',
+        width: 180,
+        height: 60,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        boxShadow: '0 6px 16px hsl(var(--primary) / 0.3)'
       }
     }
   ];
@@ -118,7 +194,7 @@ const FilteringGraph: React.FC<FilteringGraphProps> = ({ messageId }) => {
       target: '2',
       type: 'smoothstep',
       animated: true,
-      style: { stroke: '#8b5cf6', strokeWidth: 2 }
+      style: { stroke: 'hsl(var(--primary))', strokeWidth: 2.5 }
     },
     {
       id: 'e1-3',
@@ -126,7 +202,7 @@ const FilteringGraph: React.FC<FilteringGraphProps> = ({ messageId }) => {
       target: '3',
       type: 'smoothstep',
       animated: true,
-      style: { stroke: '#8b5cf6', strokeWidth: 2 }
+      style: { stroke: 'hsl(var(--primary))', strokeWidth: 2.5 }
     },
     {
       id: 'e2-4',
@@ -134,7 +210,7 @@ const FilteringGraph: React.FC<FilteringGraphProps> = ({ messageId }) => {
       target: '4',
       type: 'smoothstep',
       animated: true,
-      style: { stroke: '#06b6d4', strokeWidth: 2 }
+      style: { stroke: 'hsl(var(--muted-foreground))', strokeWidth: 2 }
     },
     {
       id: 'e3-5',
@@ -142,7 +218,7 @@ const FilteringGraph: React.FC<FilteringGraphProps> = ({ messageId }) => {
       target: '5',
       type: 'smoothstep',
       animated: true,
-      style: { stroke: '#06b6d4', strokeWidth: 2 }
+      style: { stroke: 'hsl(var(--muted-foreground))', strokeWidth: 2 }
     },
     {
       id: 'e4-6',
@@ -150,7 +226,7 @@ const FilteringGraph: React.FC<FilteringGraphProps> = ({ messageId }) => {
       target: '6',
       type: 'smoothstep',
       animated: true,
-      style: { stroke: '#10b981', strokeWidth: 2 }
+      style: { stroke: 'hsl(var(--accent))', strokeWidth: 2 }
     },
     {
       id: 'e5-6',
@@ -158,7 +234,7 @@ const FilteringGraph: React.FC<FilteringGraphProps> = ({ messageId }) => {
       target: '6',
       type: 'smoothstep',
       animated: true,
-      style: { stroke: '#10b981', strokeWidth: 2 }
+      style: { stroke: 'hsl(var(--accent))', strokeWidth: 2 }
     },
     {
       id: 'e6-7',
@@ -166,12 +242,12 @@ const FilteringGraph: React.FC<FilteringGraphProps> = ({ messageId }) => {
       target: '7',
       type: 'smoothstep',
       animated: true,
-      style: { stroke: '#f59e0b', strokeWidth: 3 }
+      style: { stroke: 'hsl(var(--primary))', strokeWidth: 3 }
     }
   ];
 
   return (
-    <div className="w-full h-96 bg-gradient-to-br from-slate-50 to-slate-100 rounded-lg border overflow-hidden">
+    <div className="w-full h-[500px] bg-gradient-to-br from-background via-muted/30 to-background rounded-xl border shadow-lg overflow-hidden">
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -185,18 +261,24 @@ const FilteringGraph: React.FC<FilteringGraphProps> = ({ messageId }) => {
         zoomOnScroll={false}
         zoomOnPinch={false}
         zoomOnDoubleClick={false}
+        className="bg-transparent"
       >
-        <Background color="#e2e8f0" gap={20} />
-        <Controls showZoom={false} showFitView={false} showInteractive={false} />
+        <Background 
+          color="hsl(var(--border))" 
+          gap={24} 
+          size={1}
+        />
         <MiniMap 
-          nodeColor="#8b5cf6"
-          nodeStrokeWidth={3}
+          nodeColor="hsl(var(--primary))"
+          nodeStrokeWidth={2}
           pannable={false}
           zoomable={false}
           style={{
-            height: 80,
-            width: 120,
-            backgroundColor: 'rgba(255, 255, 255, 0.8)',
+            height: 90,
+            width: 140,
+            backgroundColor: 'hsl(var(--background) / 0.95)',
+            border: '1px solid hsl(var(--border))',
+            borderRadius: '8px',
           }}
         />
       </ReactFlow>
