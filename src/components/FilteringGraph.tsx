@@ -247,7 +247,7 @@ const FilteringGraph: React.FC<FilteringGraphProps> = ({ messageId }) => {
   ];
 
   return (
-    <div className="w-full h-[500px] bg-gradient-to-br from-background via-muted/30 to-background rounded-xl border shadow-lg overflow-hidden">
+    <div className="w-full h-80 bg-gradient-to-br from-background via-muted/30 to-background rounded-xl border shadow-lg overflow-hidden">
       <ReactFlow
         nodes={nodes}
         edges={edges}
