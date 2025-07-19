@@ -3,8 +3,9 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Send, MessageCircle, Database, Server, Monitor, History, Settings, ChevronDown, ChevronRight, Filter } from 'lucide-react';
+import { Send, MessageCircle, Database, Server, Monitor, History, Settings, ChevronDown, ChevronRight, BarChart3 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import FilteringGraph from '@/components/FilteringGraph';
 
 interface Message {
   id: string;
@@ -245,7 +246,7 @@ const Chat = () => {
                 )}
                 <p className="text-sm leading-relaxed">{message.text}</p>
                 
-                {/* Filtering Steps - Only for AI messages with filtering steps */}
+                {/* Filtering Graph - Only for AI messages with filtering steps */}
                 {!message.isUser && message.filteringSteps && (
                   <div className="mt-3">
                     <Button
@@ -254,8 +255,8 @@ const Chat = () => {
                       onClick={() => toggleFilteringSteps(message.id)}
                       className="text-xs px-2 py-1 h-auto text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition-colors"
                     >
-                      <Filter className="w-3 h-3 mr-1" />
-                      View filtering steps
+                      <BarChart3 className="w-3 h-3 mr-1" />
+                      View filtering process
                       {expandedSteps[message.id] ? 
                         <ChevronDown className="w-3 h-3 ml-1" /> : 
                         <ChevronRight className="w-3 h-3 ml-1" />
@@ -263,16 +264,9 @@ const Chat = () => {
                     </Button>
                     
                     {expandedSteps[message.id] && (
-                      <div className="mt-2 p-3 bg-gray-50 rounded-lg border">
-                        <div className="text-xs font-medium text-gray-700 mb-2">How I reached this recommendation:</div>
-                        <div className="space-y-1">
-                          {message.filteringSteps.map((step, index) => (
-                            <div key={index} className="flex items-start gap-2">
-                              <div className="w-2 h-2 bg-slate-400 rounded-full mt-1.5 flex-shrink-0"></div>
-                              <div className="text-xs text-gray-600">{step}</div>
-                            </div>
-                          ))}
-                        </div>
+                      <div className="mt-3">
+                        <div className="text-xs font-medium text-gray-700 mb-3">How I narrowed down to your recommendations:</div>
+                        <FilteringGraph messageId={message.id} />
                       </div>
                     )}
                   </div>
