@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Send, MessageCircle, Database, Server, Monitor, History, Settings } from 'lucide-react';
+import { Send, MessageCircle, Database, Server, Monitor, History, Settings, ChevronDown, ChevronRight, Filter } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 interface Message {
@@ -12,6 +12,7 @@ interface Message {
   isUser: boolean;
   timestamp: Date;
   category?: 'os' | 'database' | 'webserver' | 'general';
+  filteringSteps?: string[];
 }
 
 interface ChatSession {
@@ -34,6 +35,7 @@ const Chat = () => {
   ]);
   const [inputValue, setInputValue] = useState('');
   const [showHistory, setShowHistory] = useState(false);
+  const [expandedSteps, setExpandedSteps] = useState<Record<string, boolean>>({});
 
   // Mock chat history
   const chatHistory: ChatSession[] = [
@@ -96,10 +98,18 @@ const Chat = () => {
     setTimeout(() => {
       const aiResponse: Message = {
         id: (Date.now() + 1).toString(),
-        text: `I understand your question about "${inputValue}". Based on your system configuration, here's what I recommend...`,
+        text: `I understand your question about "${inputValue}". Based on your system configuration, here are my recommendations: Windows Server 2022, MySQL 8.0, and Apache 2.4. These components are fully compatible and optimized for your requirements.`,
         isUser: false,
         timestamp: new Date(),
-        category: 'general'
+        category: 'general',
+        filteringSteps: [
+          '1. Analyzed user profile configuration (OS: Windows, Database: MySQL, Web Server: Apache)',
+          '2. Checked compatibility matrix for selected technologies',
+          '3. Applied performance optimization filters based on workload type',
+          '4. Verified security requirements and compliance standards',
+          '5. Cross-referenced with latest version compatibility database',
+          '6. Applied user preference weighting (reliability > performance > cost)'
+        ]
       };
       setMessages(prev => [...prev, aiResponse]);
     }, 1000);
@@ -123,6 +133,13 @@ const Chat = () => {
       case 'webserver': return 'bg-orange-100 text-orange-700';
       default: return 'bg-gray-100 text-gray-700';
     }
+  };
+
+  const toggleFilteringSteps = (messageId: string) => {
+    setExpandedSteps(prev => ({
+      ...prev,
+      [messageId]: !prev[messageId]
+    }));
   };
 
   return (
@@ -227,6 +244,40 @@ const Chat = () => {
                   </div>
                 )}
                 <p className="text-sm leading-relaxed">{message.text}</p>
+                
+                {/* Filtering Steps - Only for AI messages with filtering steps */}
+                {!message.isUser && message.filteringSteps && (
+                  <div className="mt-3">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => toggleFilteringSteps(message.id)}
+                      className="text-xs px-2 py-1 h-auto text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition-colors"
+                    >
+                      <Filter className="w-3 h-3 mr-1" />
+                      View filtering steps
+                      {expandedSteps[message.id] ? 
+                        <ChevronDown className="w-3 h-3 ml-1" /> : 
+                        <ChevronRight className="w-3 h-3 ml-1" />
+                      }
+                    </Button>
+                    
+                    {expandedSteps[message.id] && (
+                      <div className="mt-2 p-3 bg-gray-50 rounded-lg border">
+                        <div className="text-xs font-medium text-gray-700 mb-2">How I reached this recommendation:</div>
+                        <div className="space-y-1">
+                          {message.filteringSteps.map((step, index) => (
+                            <div key={index} className="flex items-start gap-2">
+                              <div className="w-2 h-2 bg-slate-400 rounded-full mt-1.5 flex-shrink-0"></div>
+                              <div className="text-xs text-gray-600">{step}</div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+                
                 <p className={`text-xs mt-2 ${message.isUser ? 'text-slate-300' : 'text-gray-500'}`}>
                   {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </p>
